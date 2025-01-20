@@ -27,5 +27,20 @@ class Task {
         $stmt = $this->pdo->prepare("DELETE FROM tasks WHERE id = ? AND user_id = ?");
         $stmt->execute([$task_id, $user_id]);
     }
+
+    public function toggleComplete($task_id, $user_id) {
+        // Récupérer l'état actuel de la tâche
+        $stmt = $this->pdo->prepare("SELECT is_completed FROM tasks WHERE id = ? AND user_id = ?");
+        $stmt->execute([$task_id, $user_id]);
+        $task = $stmt->fetch();
+
+        if ($task) {
+            // Inverser l'état de la tâche
+            $new_status = $task['is_completed'] ? 0 : 1;
+            $stmt = $this->pdo->prepare("UPDATE tasks SET is_completed = ? WHERE id = ? AND user_id = ?");
+            $stmt->execute([$new_status, $task_id, $user_id]);
+        }
+    }
 }
+
 ?>
