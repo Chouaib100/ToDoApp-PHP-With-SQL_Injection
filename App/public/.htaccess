@@ -1,21 +1,5 @@
-
-# Activer le module de réécriture d'URL
 RewriteEngine On
-
-# Base directory (si l'application est dans un sous-répertoire)
-RewriteBase /todo-app/public/
-
-# Rediriger toutes les requêtes vers index.php
+RewriteBase /ToDoApp-PHP-With-SQL_Injection/public/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?action=$1 [QSA,L]
-
-# Empêcher l'accès direct aux fichiers sensibles
-<FilesMatch "\.(env|htaccess|log|ini|sql)$">
-    Deny from all
-</FilesMatch>
-
-# Protéger les répertoires sensibles
-<DirectoryMatch "/(config|app/controllers|app/models)">
-    Deny from all
-</DirectoryMatch>
